@@ -10,6 +10,7 @@
   "license": "ISC",
   "devDependencies": {
     "dotenv": "^4.0.0",
+    "selenium-standalone": "^6.7.0",
     "webdriverio": "^4.8.0"
   }
 }

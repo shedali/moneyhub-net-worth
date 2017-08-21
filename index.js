@@ -1,5 +1,6 @@
 var webdriverio = require('webdriverio'),
     fs = require('fs'),
+    selenium = require('selenium-standalone'),
     options = {
     desiredCapabilities: {
         browserName: 'chrome'
@@ -8,7 +9,12 @@ var webdriverio = require('webdriverio'),
 
 require('dotenv').config();
 
-webdriverio
+selenium.start({
+  spawnOptions: {
+      stdio: 'inherit'
+  }
+}, function(err, selenium) {
+  webdriverio
     .remote(options)
     .init()
     .url('https://client.moneyhub.co.uk')
@@ -24,8 +30,14 @@ webdriverio
             if(err) {
                 return console.log(err);
             }
-            
         }); 
         console.log('written to total.txt');
     })
-    .end();
+    .end()
+    .then(function(){
+        selenium.kill();
+    })
+});
+
+
+
