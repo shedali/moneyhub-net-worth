@@ -9,11 +9,45 @@ var webdriverio = require('webdriverio'),
 
 require('dotenv').config();
 
-selenium.start({
+
+console.log('starting selenium standalone');
+
+
+selenium.install({
+  version: '3.5.0',
+  baseURL: 'https://selenium-release.storage.googleapis.com',
+  drivers: {
+    chrome: {
+      version: '2.31',
+      arch: process.arch,
+      baseURL: 'https://chromedriver.storage.googleapis.com'
+    },
+    firefox: {
+      version: '0.18.0',
+      arch: process.arch,
+      baseURL: 'https://github.com/mozilla/geckodriver/releases/download'
+    }
+  },
+  logger: function(message) {
+ 
+  },
+  progressCb: function(totalLength, progressLength, chunkLength) {
+        console.log(totalLength, progressLength, chunkLength)
+  }
+}, function(err, something){
+    if(err)console.log(err)
+
+        selenium.start({
   spawnOptions: {
       stdio: 'inherit'
   }
 }, function(err, selenium) {
+
+    if(err){
+        console.log(err);
+        process.exit(1);
+    }
+
   webdriverio
     .remote(options)
     .init()
@@ -38,6 +72,9 @@ selenium.start({
         selenium.kill();
     })
 });
+});
+
+
 
 
 
