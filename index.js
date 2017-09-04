@@ -56,6 +56,8 @@ selenium.install({
     .setValue('[type=email]', process.env.email)
     .setValue('[type=password]', process.env.password)
     .click('[data-aid=signin-button]')
+    .waitForExist('[data-aid=menu-accounts-assets]', 5000)
+    .click('[data-aid=menu-accounts-assets]')
     .waitForExist('[data-aid=AssetsAndLiabilitiesHero] span', 10000)
     .getText('[data-aid=AssetsAndLiabilitiesHero] span').then(function(total) {
         console.log('attempting to write total', total, 'utf8');
